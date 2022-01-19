@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": null,
-    "database": "database_development",
+    "password": "hungvo456hv",
+    "database": "volunteer",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -19,7 +19,6 @@
     "database": "railway",
     "host": "containers-us-west-7.railway.app",
     "dialect": "mysql",
-    "port": "6474",
-    "use_env_variable": "mysql://root:oLTLlYCQCaJYcJ2KIHHX@containers-us-west-7.railway.app:6474/railway"
+    "use_env_variable": "DB_URL"
   }
 }
