@@ -1,5 +1,5 @@
 const sequelize = require('../utils/database');
-const Sequelize = require('Sequelize');
+const Sequelize = require('sequelize');
 const Offer = sequelize.define('Offer', {
     idTask: {
         type: Sequelize.STRING,

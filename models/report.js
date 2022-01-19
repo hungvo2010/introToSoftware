@@ -1,5 +1,5 @@
 const sequelize = require('../utils/database');
-const Sequelize = require('Sequelize');
+const Sequelize = require('sequelize');
 const Report = sequelize.define('Report', {
     reportId: {
         type: Sequelize.STRING,
