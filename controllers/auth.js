@@ -154,6 +154,7 @@ exports.postReset = (req, res, next) => {
 
 exports.postNewPassword = (req, res, next) => {
     const {email, newPassword, token} = req.body;
+    console.log(req.body);
     Token.findOne({
         where: {
             email,
