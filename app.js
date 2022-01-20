@@ -36,6 +36,10 @@ User.hasMany(Chat, {foreignKey: 'idReceiver'});
 
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,6 +49,10 @@ app.use(authRouter);
 app.use(profileRouter);
 app.use(taskRouter);
 app.use(connectionRouter);
+
+app.get('/', (req, res, next) => {
+  res.render('index');
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
