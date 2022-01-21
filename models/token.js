@@ -19,7 +19,6 @@ const Token = sequelize.define('Token', {
     expirationDate: {
         type: Sequelize.DATE,
         require: true,
-        defaultValue: new Date(Date.now() + 300000),
     }
 })
 

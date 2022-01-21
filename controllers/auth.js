@@ -124,6 +124,7 @@ exports.postReset = (req, res, next) => {
         Token.create({
             email,
             token: generateToken(),
+            expirationDate: new Date(Date.now() + 300000),
         })
         .then(newToken => {
             console.log(newToken.token);
