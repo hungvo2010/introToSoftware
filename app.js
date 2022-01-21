@@ -70,7 +70,7 @@ app.use(function(err, req, res, next) {
   // res.render('error');
 });
 
-sequelize.sync()
+sequelize.sync({force: true})
 .then(db => {
   app.listen(process.env.PORT || 3000);
 })
