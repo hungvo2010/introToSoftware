@@ -19,7 +19,7 @@ const Profile = sequelize.define('Profile', {
         type: Sequelize.INTEGER,
         allowNull: false,
     },
-    favoriteTask: {
+    bio: {
         type: Sequelize.STRING,
         allowNull: false,
     },
