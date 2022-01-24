@@ -27,7 +27,7 @@ exports.postSignup = (req, res, next) => {
         let hashPassword;
         let authSaved;
         crypto.randomBytes(5, (err, buffer) => {
-            console.log(err);
+            if (!err) throw next(err);
             uid = buffer.toString('hex');
             bcryptjs.hash(password, 12)
             .then(hashedPassword => {
