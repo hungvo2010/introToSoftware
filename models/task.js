@@ -7,7 +7,7 @@ const Task = sequelize.define('Task', {
     },
     idVolunteer: {
         type: Sequelize.STRING,
-        allowNull: false,
+        // allowNull: false,
         // references: 'User',
         // referencesKey: 'userId',
         // references: {
@@ -62,6 +62,10 @@ const Task = sequelize.define('Task', {
         //     key: 'feedbackId',
         // }
     },
+    photoUrl: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    }
 });
 
 module.exports = Task;

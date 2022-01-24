@@ -1,6 +1,8 @@
 const Task = require('../models/task');
+const cloudinary = require('../services/upload').cloudinary;
 
-exports.createTask = (req, res, next) => {
+exports.createTask = async (req, res, next) => {
+    const image = await cloudinary.uploader.upload(req.file.path);
     const {taskId, priority, lat, long, type, deadline, description} = req.body;
     const idReceiver = req.user.userId;
     Task.create({
@@ -12,16 +14,21 @@ exports.createTask = (req, res, next) => {
         type,
         deadline,
         description,
+        photoUrl: image.secure_url,
     })
     .then(task => {
-        res.status(201).json(task);
+        res.status(201).json({
+            message: "Task created",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
-exports.updateTask = (req, res, next) => {
+exports.updateTask = async (req, res, next) => {
+    const image = await cloudinary.uploader.upload(req.file.path);
     const {taskId, priority, lat, long, type, deadline, description} = req.body;
     Task.findByPk(taskId)
     .then(task => {
@@ -31,34 +38,38 @@ exports.updateTask = (req, res, next) => {
         task.type = type;
         task.deadline = deadline;
         task.description = description;
+        task.photoUrl = image.secure_url;
         return task.save();
     })
     .then(task => {
-        res.status(201).json(task);
+        res.status(204).json({
+            message: "Task updated",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
-exports.getConnectionHistory = (req, res, next) => {
-    const userId = req.user.userId;
-    Task.findAll({
-        where: {
-                $or: [
-                {
-                    idVolunteer: userId,
-                },
-                {
-                    idReceiver: userId,
-                }
-            ]
-        }
-    })
-    .then(tasks => {
+// exports.getConnectionHistory = (req, res, next) => {
+//     const userId = req.user.userId;
+//     Task.findAll({
+//         where: {
+//                 $or: [
+//                 {
+//                     idVolunteer: userId,
+//                 },
+//                 {
+//                     idReceiver: userId,
+//                 }
+//             ]
+//         }
+//     })
+//     .then(tasks => {
         
-    })
-}
+//     })
+// }
 
 exports.confirmHelp = (req, res, next) => {
     const {taskId} = req.body;
@@ -68,10 +79,13 @@ exports.confirmHelp = (req, res, next) => {
         return task.save();
     })
     .then(task => {
-        res.status(204).json(task);
+        res.status(204).json({
+            message: "Task finished",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
@@ -102,5 +116,6 @@ exports.filterTask = (req, res, next) => {
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }

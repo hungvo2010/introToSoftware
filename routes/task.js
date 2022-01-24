@@ -11,7 +11,7 @@ router.post('/task/create', verifyToken, taskController.createTask);
 router.post('/task/update', verifyToken, taskController.updateTask);
 
 // User get connection history
-router.get('/task/history', verifyToken, taskController.getConnectionHistory);
+// router.get('/task/history', verifyToken, taskController.getConnectionHistory);
 
 // Handicapped confirm already received Help
 router.get('/task/help', verifyToken, taskController.confirmHelp);

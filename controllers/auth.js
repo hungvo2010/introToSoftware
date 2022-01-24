@@ -92,7 +92,7 @@ exports.postSignin = (req, res, next) =>{
             })
             .then(user => {
                 const token = jwt.sign(
-                    { userId: user.id, email },
+                    { userId: user.userId, email},
                     process.env.TOKEN_KEY,
                     {
                     expiresIn: "2h",

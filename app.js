@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sequelize = require('./utils/database');
+// const upload = require('./services/upload');
 
 require('dotenv').config({path: path.join(__dirname, '.env')});
 
@@ -44,6 +45,12 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// app.use(upload.single("photoUrl"));
+
+app.use((req, res, next) => {
+  console.log("Body: ", req.body);
+  next();
+})
 
 app.use(authRouter);
 app.use(profileRouter);
@@ -70,7 +77,7 @@ app.use(function(err, req, res, next) {
   // res.render('error');
 });
 
-sequelize.sync()
+sequelize.sync({force: true})
 .then(db => {
   app.listen(process.env.PORT || 3000);
 })

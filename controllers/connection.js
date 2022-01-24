@@ -14,9 +14,12 @@ exports.reportUser = (req, res, next) => {
         reportUserId: beReportedUserId,
     })
     .then(report => {
-        res.status(201).json(report);
+        res.status(201).json({
+            message: "Task updated",
+        });
     })
     .catch(err => {
+        console.log(err);
         next(err);
     })
 }
@@ -29,9 +32,10 @@ exports.getReports = (req, res, next) => {
         }
     })
     .then(reports => {
-        res.status(201).json(reports);
+        res.status(200).json(reports);
     })
     .catch(err => {
+        console.log(err);
         next(err);
     })
 }
@@ -44,10 +48,13 @@ exports.offerHelp = (req, res, next) => {
         volunteerId,
     })
     .then(offer => {
-        res.status(201).json(offer);
+        res.status(204).json({
+            message: "Offered",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
@@ -60,10 +67,13 @@ exports.postNewMessage = (req, res, next) => {
         message,
     })
     .then(chat => {
-        res.status(201).json(chat);
+        res.status(201).json({
+            message: "Send",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
@@ -81,6 +91,7 @@ exports.getMessage = (req, res, next) => {
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
@@ -93,10 +104,13 @@ exports.postFeedback = (req, res, next) => {
         description,
     })
     .then(feedback => {
-        res.status(201).json(feedback);
+        res.status(201).json({
+            message: "Feedback",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
@@ -108,10 +122,13 @@ exports.updateFeedback = (req, res, next) => {
         return feedback.save();
     })
     .then(feedback => {
-        res.status(201).json(feedback);
+        res.status(204).json({
+            message: "Feedback",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
 
@@ -123,9 +140,12 @@ exports.agreeHelp = (req, res, next) => {
         return task.save();
     })
     .then(task => {
-        res.status(201).json(task);
+        res.status(204).json({
+            message: "Agreed",
+        });
     })
     .catch(err => {
         console.log(err);
+        next(err);
     })
 }
