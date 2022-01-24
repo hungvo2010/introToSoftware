@@ -19,7 +19,8 @@ exports.postSignup = (req, res, next) => {
     .then(auth => {
         if (auth){
             return res.status(409).json({
-                error: 'Email already register',
+                message: 'Email already register',
+                userId: '',
             })
         }
         let uid;
@@ -36,6 +37,7 @@ exports.postSignup = (req, res, next) => {
                     password: hashedPassword,
                 })
                 .catch(err => {
+                    console.log(err);
                     throw next(err);
                 });
             })
@@ -51,18 +53,24 @@ exports.postSignup = (req, res, next) => {
                 })
                 .catch(err => {
                     authSaved.destroy();
+                    console.log(err);
                     throw next(err);
                 });
             })
             .then(user => {
-                res.status(201).json(user);
+                res.status(201).json({
+                    message: 'Signup success',
+                    userId: user.id,
+                });
             })
             .catch(err => {
+                console.log(err);
                 next(err);
             })
         })
     })
     .catch(err => {
+        console.log(err);
         next(err);
     })
 }
@@ -74,7 +82,8 @@ exports.postSignin = (req, res, next) =>{
         if (!auth)
         {
             return res.status(401).json({
-                error: 'Email not found',
+                message: 'Email not found',
+                token: ''
             })
         }
         return bcryptjs.compare(password, auth.password)
@@ -82,7 +91,8 @@ exports.postSignin = (req, res, next) =>{
             if (!auth)
             {
                 return res.status(401).json({
-                    error: 'Password wrong.',
+                    message: 'Password wrong.',
+                    token: ''
                 })
             }
             return User.findOne({
@@ -98,14 +108,18 @@ exports.postSignin = (req, res, next) =>{
                     expiresIn: "2h",
                     }
                 );
-                user.dataValues.token = token;
-                return res.status(200).json(user);
+                return res.status(200).json({
+                    message: 'Signed in',
+                    token: token,
+                });
             })
             .catch(err => {
+                console.log(err);
                 next(err);
             })
         })
         .catch(err => {
+            console.log(err);
             next(err);
         })
 })}
@@ -118,7 +132,7 @@ exports.postReset = (req, res, next) => {
         if (!auth)
         {
             return res.status(401).json({
-                error: 'Email not found',
+                message: 'Email not found',
             })
         }
         Token.create({
@@ -145,10 +159,12 @@ exports.postReset = (req, res, next) => {
             })
         })
         .catch(err => {
+            console.log(err);
             next(err);
         })
     })
     .catch(err => {
+        console.log(err);
         next(err);
     })
 }
@@ -168,7 +184,7 @@ exports.postNewPassword = (req, res, next) => {
     .then(fetchedToken => {
         if (!fetchedToken){
             return res.status(400).json({
-                error: 'Token verification failed',
+                message: 'Token verification failed',
             })
         }
         fetchedToken.destroy();
@@ -182,13 +198,17 @@ exports.postNewPassword = (req, res, next) => {
             })
         })
         .then(auth => {
-            res.status(200).json(auth);
+            return res.status(200).json({
+                message: 'Reset',
+            });
         })
         .catch(err => {
+            console.log(err);
             next(err);
         })
     })
     .catch(err => {
+        console.log(err);
         next(err);
     })
 }
@@ -201,7 +221,7 @@ exports.postUpdatePassword = (req, res, next) => {
         .then(result => {
             if (!result){
                 return res.status(400).json({
-                    error: 'Password wrong.',
+                    message: 'Password wrong.',
                 })
             }
             bcryptjs.hash(newPassword, 12)
@@ -210,17 +230,22 @@ exports.postUpdatePassword = (req, res, next) => {
                 return auth.save();
             })
             .then(auth => {
-                res.status(200).json(auth);
+                return res.status(200).json({
+                    message: 'Updated',
+                });
             })
             .catch(err => {
+                console.log(err);
                 next(err);
             })
         })
         .catch(err => {
+            console.log(err);
             next(err);
         })
     })
     .catch(err => {
+        console.log(err);
         next(err);
     })
 }
