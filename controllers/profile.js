@@ -23,7 +23,7 @@ exports.getProfile = (req, res, next) => {
 exports.updateProfile = async (req, res, next) => {
     const image = await cloudinary.uploader.upload(req.file.path);
     const userId = req.user.userId;
-    const {name, age, favoriteTask, availableTime} = req.body;
+    const {name, age, bio, availableTime} = req.body;
     console.log(req.body);
     Profile.findByPk(userId)
     .then(profile => {
@@ -32,14 +32,14 @@ exports.updateProfile = async (req, res, next) => {
                 userId,
                 name,
                 age,
-                favoriteTask,
+                bio,
                 availableTime,
                 avatarUrl: image.secure_url,
             });
         }
         profile.name = name;
         profile.age = age;
-        profile.favoriteTask = favoriteTask;
+        profile.bio = bio;
         profile.availableTime = availableTime;
         profile.avatarUrl = req.file.filename;
         return profile.save();
