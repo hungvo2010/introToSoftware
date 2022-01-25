@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const cloudinary = require('../services/upload').cloudinary;
 
 exports.createTask = async (req, res, next) => {
+    console.log(req.body);
     const image = await cloudinary.uploader.upload(req.file.path);
     const {priority, lat, long, type, deadline, description} = req.body;
     const idReceiver = req.user.userId;
