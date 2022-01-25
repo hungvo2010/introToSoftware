@@ -3,12 +3,13 @@ const express = require('express');
 const router = express.Router();
 const taskController = require('../controllers/task');
 const verifyToken = require('../middleware/verifyToken');
+const upload = require('../services/upload').upload;
 
 // Handicapped create new task
-router.post('/task/create', verifyToken, taskController.createTask);
+router.post('/task/create', upload.single("photo"), verifyToken, taskController.createTask);
 
 // Handicapped update task information
-router.post('/task/update', verifyToken, taskController.updateTask);
+router.post('/task/update', upload.single("photo"), verifyToken, taskController.updateTask);
 
 // User get connection history
 // router.get('/task/history', verifyToken, taskController.getConnectionHistory);
