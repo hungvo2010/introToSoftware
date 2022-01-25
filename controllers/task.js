@@ -1,30 +1,35 @@
 const Task = require('../models/task');
 const cloudinary = require('../services/upload').cloudinary;
+const crypto = require('crypto');
 
 exports.createTask = async (req, res, next) => {
     const image = await cloudinary.uploader.upload(req.file.path);
-    const {taskId, priority, lat, long, type, deadline, description} = req.body;
+    const {priority, lat, long, type, deadline, description} = req.body;
     const idReceiver = req.user.userId;
-    Task.create({
-        taskId,
-        idReceiver,
-        priority,
-        lat,
-        long,
-        type,
-        deadline,
-        description,
-        photoUrl: image.secure_url,
-    })
-    .then(task => {
-        res.status(201).json({
-            message: "Task created",
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        next(err);
-    })
+    crypto.randomBytes(5, (err, buffer) => {
+        if (err) throw next(err);
+        const taskId = buffer.toString('hex');
+        Task.create({
+            taskId,
+            idReceiver,
+            priority,
+            lat,
+            long,
+            type,
+            deadline,
+            description,
+            photoUrl: image.secure_url,
+        })
+        .then(task => {
+            res.status(201).json({
+                message: "Task created",
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            next(err);
+        })
+    })   
 }
 
 exports.updateTask = async (req, res, next) => {
