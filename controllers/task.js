@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const cloudinary = require('../services/upload').cloudinary;
 
 exports.listTasks = (req, res, next) => {
-    Task.findOne({
+    Task.findByPk('e1f394fc32', {
         include: [
             {
                 model: Profile,
