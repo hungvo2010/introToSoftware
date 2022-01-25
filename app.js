@@ -23,17 +23,29 @@ const Task = require('./models/task');
 const User = require('./models/user');
 
 User.belongsTo(Authenticator, {foreignKey: 'email'});
+Authenticator.hasOne(User, {foreignKey: 'email'});
 Profile.belongsTo(User, {foreignKey: 'userId'});
-User.hasMany(Task, {foreignKey: 'idVolunteer'});
-User.hasMany(Task, {foreignKey: 'idReceiver'});
+User.hasOne(Profile, {foreignKey: 'userId'});
+Profile.hasMany(Task, {foreignKey: 'idVolunteer'});
+Profile.hasMany(Task, {foreignKey: 'idReceiver'});
+Task.belongsTo(Profile, {foreignKey: 'idVolunteer'});
+Task.belongsTo(Profile, {foreignKey: 'idReceiver'});
 Feedback.hasOne(Task, {foreignKey: 'feedbackId'});
+Task.belongsTo(Feedback, {foreignKey: 'feedbackId'});
 Task.hasMany(Offer, {foreignKey: 'idTask'});
+Offer.belongsTo(Task, {foreignKey: 'idTask'});
+Feedback.belongsTo(User, {foreignKey: 'userId'});
 User.hasMany(Feedback, {foreignKey: 'userId'});
+Report.belongsTo(User, {foreignKey: 'userId'});
+Report.belongsTo(User, {foreignKey: 'reportedUserId'});
 User.hasMany(Report, {foreignKey: 'userId'});
 User.hasMany(Report, {foreignKey: 'reportedUserId'});
 User.hasMany(Offer, {foreignKey: 'volunteerId'});
+Offer.belongsTo(User, {foreignKey: 'volunteerId'});
 User.hasMany(Chat, {foreignKey: 'idSender'});
 User.hasMany(Chat, {foreignKey: 'idReceiver'});
+Chat.belongsTo(User, {foreignKey: 'idSender'});
+Chat.belongsTo(User, {foreignKey: 'idReceiver'});
 
 const app = express();
 

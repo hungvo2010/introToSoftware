@@ -5,6 +5,10 @@ const Task = sequelize.define('Task', {
         type: Sequelize.STRING,
         primaryKey: true,
     },
+    taskName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+    },
     idVolunteer: {
         type: Sequelize.STRING,
         // allowNull: false,

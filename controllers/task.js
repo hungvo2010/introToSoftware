@@ -1,14 +1,41 @@
 const Task = require('../models/task');
+const User = require('../models/user');
+const Profile = require('../models/profile');
 const crypto = require('crypto');
 const cloudinary = require('../services/upload').cloudinary;
 
+exports.listTasks = (req, res, next) => {
+    Task.findAll({
+        include: [
+            {
+                model: Profile,
+            }
+        ]
+    })
+    .then(tasks => {
+        tasks.forEach(task => {
+            task.dataValues.receiverName = task.Profile.name;
+            delete task.dataValues.Profile;
+        });
+        res.status(200).json(tasks);
+    })
+}
+
 exports.viewTask = (req, res, next) => {
     const taskId = req.params.taskId;
-    Task.findByPk(taskId)
+    Task.findByPk(taskId, {
+        include: [
+            {
+                model: Profile,
+            }
+        ]
+    })
     .then(task => {
         if (!task){
             return res.status(404).json({});
         }
+        task.dataValues.receiverName = task.Profile.name;
+        delete task.dataValues.Profile;
         res.status(200).json(task);
     })
     .catch(err => {
@@ -20,12 +47,13 @@ exports.viewTask = (req, res, next) => {
 exports.createTask = async (req, res, next) => {
     console.log(req.body);
     const image = await cloudinary.uploader.upload(req.file.path);
-    const {priority, lat, long, type, deadline, description} = req.body;
+    const {taskName, priority, lat, long, type, deadline, description} = req.body;
     const idReceiver = req.user.userId;
     crypto.randomBytes(5, (err, buffer) => {
         if (err) throw next(err);
         const taskId = buffer.toString('hex');
         Task.create({
+            taskName,
             taskId,
             idReceiver,
             priority,
@@ -51,9 +79,10 @@ exports.createTask = async (req, res, next) => {
 
 exports.updateTask = async (req, res, next) => {
     const image = await cloudinary.uploader.upload(req.file.path);
-    const {taskId, priority, lat, long, type, deadline, description} = req.body;
+    const {taskId, taskName, priority, lat, long, type, deadline, description} = req.body;
     Task.findByPk(taskId)
     .then(task => {
+        task.taskName = taskName;
         task.priority = true,
         task.lat = lat;
         task.long = long;

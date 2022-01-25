@@ -5,6 +5,8 @@ const taskController = require('../controllers/task');
 const verifyToken = require('../middleware/verifyToken');
 const upload = require('../services/upload').upload;
 
+router.get("/tasks", verifyToken, taskController.listTasks);
+
 router.get("/task/:taskId", verifyToken, taskController.viewTask);
 
 // Handicapped create new task
