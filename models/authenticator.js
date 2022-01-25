@@ -9,6 +9,8 @@ const Authenticator = sequelize.define('Authenticator', {
         type: Sequelize.STRING,
         allowNull: false,
     }
+}, {
+    timestamps: false,
 });
 
 module.exports = Authenticator;

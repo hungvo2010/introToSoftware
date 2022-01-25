@@ -29,6 +29,8 @@ const Report = sequelize.define('Report', {
         //     key: 'taskId',
         // }
     }
+}, {
+    timestamps: false,
 });
 
 module.exports = Report;

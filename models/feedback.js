@@ -19,6 +19,8 @@ const Feedback = sequelize.define('Feedback', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+}, {
+    timestamps: false,
 });
 
 module.exports = Feedback;

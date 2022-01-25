@@ -2,6 +2,21 @@ const Task = require('../models/task');
 const crypto = require('crypto');
 const cloudinary = require('../services/upload').cloudinary;
 
+exports.viewTask = (req, res, next) => {
+    const taskId = req.params.taskId;
+    Task.findByPk(taskId)
+    .then(task => {
+        if (!task){
+            return res.status(404).json({});
+        }
+        res.status(200).json(task);
+    })
+    .catch(err => {
+        console.log(err);
+        next(err);
+    })
+}
+
 exports.createTask = async (req, res, next) => {
     console.log(req.body);
     const image = await cloudinary.uploader.upload(req.file.path);

@@ -31,6 +31,8 @@ const Profile = sequelize.define('Profile', {
         type: Sequelize.STRING,
         allowNull: false,
     },
+}, {
+    timestamps: false,
 });
 
 module.exports = Profile;

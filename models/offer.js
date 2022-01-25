@@ -21,6 +21,8 @@ const Offer = sequelize.define('Offer', {
         //     key: 'userId',
         // }
     }
+}, {
+    timestamps: false,
 });
 
 module.exports = Offer;

@@ -65,6 +65,8 @@ const Task = sequelize.define('Task', {
         type: Sequelize.STRING,
         allowNull: false,
     }
+}, {
+    timestamps: false,
 });
 
 module.exports = Task;

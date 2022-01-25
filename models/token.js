@@ -20,6 +20,8 @@ const Token = sequelize.define('Token', {
         type: Sequelize.DATE,
         require: true,
     }
+}, {
+    timestamps: false,
 })
 
 module.exports = Token;

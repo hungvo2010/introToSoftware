@@ -78,7 +78,7 @@ app.use(function(err, req, res, next) {
 });
 
 sequelize.sync(
-  {alter: true},
+  // {alter: true},
   // {force: true}
 )
 .then(db => {
