@@ -58,7 +58,7 @@ exports.updateProfile = async (req, res, next) => {
     })
 }
 
-exports.changeMode = (req, res, rext) => {
+exports.changeMode = (req, res, next) => {
     const userId = req.user.userId;
     const mode = req.body.mode;
     console.log(mode);
