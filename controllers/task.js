@@ -5,7 +5,7 @@ const crypto = require('crypto');
 const cloudinary = require('../services/upload').cloudinary;
 
 exports.listTasks = (req, res, next) => {
-    Task.findAll({
+    Task.findOne({
         include: [
             {
                 model: Profile,
@@ -13,10 +13,12 @@ exports.listTasks = (req, res, next) => {
         ]
     })
     .then(tasks => {
-        tasks.forEach(task => {
-            task.dataValues.receiverName = task.Profile.name;
-            delete task.dataValues.Profile;
-        });
+        // tasks.forEach(task => {
+        //     task.dataValues.receiverName = task.Profile.name;
+        //     delete task.dataValues.Profile;
+        // });
+        task.dataValues.receiverName = task.Profile.name;
+        delete task.dataValues.Profile;
         res.status(200).json(tasks);
     })
 }
