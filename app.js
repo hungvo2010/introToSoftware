@@ -78,8 +78,8 @@ app.use(function(err, req, res, next) {
 });
 
 sequelize.sync(
-  alter: true,
-  // force: true
+  {alter: true},
+  // {force: true}
 )
 .then(db => {
   app.listen(process.env.PORT || 3000);
