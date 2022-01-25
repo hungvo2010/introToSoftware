@@ -3,25 +3,31 @@ const Report = require('../models/report');
 const Feedback = require('../models/feedback');
 const Task = require("../models/task");
 const Offer = require("../models/offer");
+const crypto = require('crypto');
 
 exports.reportUser = (req, res, next) => {
     const reportUserId = req.user.userId;
-    const {reportId, beReportedUserId, description} = req.body;
+    const {beReportedUserId, description} = req.body;
     console.log(req.body);
-    Report.create({
-        reportId,
-        userId: reportUserId,
-        description,
-        reportUserId: beReportedUserId,
-    })
-    .then(report => {
-        res.status(201).json({
-            message: "Task updated",
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        next(err);
+    crypto.randomBytes(5, (err, buffer) => {
+        if (err) throw next(err);
+        const reportId = buffer.toString('hex');
+        Report.create({
+            reportId,
+            userId: reportUserId,
+            description,
+            reportUserId: beReportedUserId,
+        })
+        .then(report => {
+            res.status(201).json({
+                message: "Task updated",
+                reportId: report.reportId,
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            next(err);
+        })
     })
 }
 
@@ -98,21 +104,26 @@ exports.getMessage = (req, res, next) => {
 
 exports.postFeedback = (req, res, next) => {
     const userId = req.user.userId;
-    const {feedbackId, description} = req.body;
+    const {description} = req.body;
     console.log(req.body);
-    Feedback.create({
-        feedbackId,
-        userId,
-        description,
-    })
-    .then(feedback => {
-        res.status(201).json({
-            message: "Feedback",
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        next(err);
+    crypto.randomBytes(5, (err, buffer) => {
+        if (err) throw next(err);
+        const feedbackId = buffer.toString('hex');
+        Feedback.create({
+            feedbackId,
+            userId,
+            description,
+        })
+        .then(feedback => {
+            res.status(201).json({
+                message: "Feedback",
+                feedbackId: feedback.feedbackId,
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            next(err);
+        })
     })
 }
 
