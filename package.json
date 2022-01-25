@@ -26,8 +26,6 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.2",
     "nodemon": "^2.0.15",
-    "railway": "^2.0.17",
-    "sequelize": "^6.13.0",
-    "sequelize-cli": "^6.4.1"
+    "sequelize": "^6.13.0"
   }
 }
