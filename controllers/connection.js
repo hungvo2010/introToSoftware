@@ -7,6 +7,7 @@ const Offer = require("../models/offer");
 exports.reportUser = (req, res, next) => {
     const reportUserId = req.user.userId;
     const {reportId, beReportedUserId, description} = req.body;
+    console.log(req.body);
     Report.create({
         reportId,
         userId: reportUserId,
@@ -98,6 +99,7 @@ exports.getMessage = (req, res, next) => {
 exports.postFeedback = (req, res, next) => {
     const userId = req.user.userId;
     const {feedbackId, description} = req.body;
+    console.log(req.body);
     Feedback.create({
         feedbackId,
         userId,
@@ -116,6 +118,7 @@ exports.postFeedback = (req, res, next) => {
 
 exports.updateFeedback = (req, res, next) => {
     const {feedbackId, description} = req.body;
+    console.log(req.body);
     Feedback.findByPk(feedbackId)
     .then(feedback => {
         feedback.description = description;
@@ -134,6 +137,7 @@ exports.updateFeedback = (req, res, next) => {
 
 exports.agreeHelp = (req, res, next) => {
     const {taskId, volunteerId} = req.body;
+    console.log(req.body);
     Task.findByPk(taskId)
     .then(task => {
         task.idVolunteer = volunteerId;

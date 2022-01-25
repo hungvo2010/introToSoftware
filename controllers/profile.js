@@ -4,6 +4,7 @@ const cloudinary = require('../services/upload').cloudinary;
 
 exports.getProfile = (req, res, next) => {
     const guestUserId = req.params.userId;
+    console.log(guestUserId);
     Profile.findByPk(guestUserId)
     .then(profile => {
         if (!profile){
@@ -23,6 +24,7 @@ exports.updateProfile = async (req, res, next) => {
     const image = await cloudinary.uploader.upload(req.file.path);
     const userId = req.user.userId;
     const {name, age, favoriteTask, availableTime} = req.body;
+    console.log(req.body);
     Profile.findByPk(userId)
     .then(profile => {
         if (!profile){
@@ -56,6 +58,7 @@ exports.updateProfile = async (req, res, next) => {
 exports.changeMode = (req, res, rext) => {
     const userId = req.user.userId;
     const mode = req.body.mode;
+    console.log(mode);
     User.findByPk(userId)
     .then(user => {
         user.mode = mode;
