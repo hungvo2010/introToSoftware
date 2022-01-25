@@ -12,7 +12,7 @@ exports.listTasks = (req, res, next) => {
             }
         ]
     })
-    .then(tasks => {
+    .then(task => {
         // tasks.forEach(task => {
         //     task.dataValues.receiverName = task.Profile.name;
         //     delete task.dataValues.Profile;
@@ -20,7 +20,7 @@ exports.listTasks = (req, res, next) => {
         task.dataValues.receiverName = task.Profile.name;
         delete task.dataValues.Profile;
         console.log(task);
-        res.status(200).json(tasks);
+        res.status(200).json(task);
     })
 }
 
