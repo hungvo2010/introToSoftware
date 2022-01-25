@@ -19,6 +19,7 @@ exports.listTasks = (req, res, next) => {
         // });
         task.dataValues.receiverName = task.Profile.name;
         delete task.dataValues.Profile;
+        console.log(task);
         res.status(200).json(tasks);
     })
 }
