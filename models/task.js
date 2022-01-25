@@ -51,7 +51,6 @@ const Task = sequelize.define('Task', {
     },
     isFinished: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
     },
     feedbackId: {
         type: Sequelize.STRING,

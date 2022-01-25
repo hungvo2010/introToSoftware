@@ -23,6 +23,7 @@ exports.createTask = async (req, res, next) => {
         .then(task => {
             res.status(201).json({
                 message: "Task created",
+                taskId: task.taskId,
             });
         })
         .catch(err => {
