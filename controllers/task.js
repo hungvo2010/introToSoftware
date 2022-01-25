@@ -1,6 +1,7 @@
 const Task = require('../models/task');
 const cloudinary = require('../services/upload').cloudinary;
 const crypto = require('crypto');
+const cloudinary = require('../services/upload').cloudinary;
 
 exports.createTask = async (req, res, next) => {
     const image = await cloudinary.uploader.upload(req.file.path);
