@@ -46,6 +46,7 @@ exports.viewTask = (req, res, next) => {
 
 exports.createTask = async (req, res, next) => {
     console.log(req.body);
+    if (!req.file) return next();
     const image = await cloudinary.uploader.upload(req.file.path);
     const {taskName, priority, lat, long, type, deadline, description} = req.body;
     const idReceiver = req.user.userId;
@@ -78,6 +79,7 @@ exports.createTask = async (req, res, next) => {
 }
 
 exports.updateTask = async (req, res, next) => {
+    if (!req.file) return next();
     const image = await cloudinary.uploader.upload(req.file.path);
     const {taskId, taskName, priority, lat, long, type, deadline, description} = req.body;
     Task.findByPk(taskId)

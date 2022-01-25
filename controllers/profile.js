@@ -24,6 +24,7 @@ exports.updateProfile = async (req, res, next) => {
     console.log(cloudinary.uploader.upload);
     console.log(req.file);
     console.log(req.body);
+    if (!req.file) return next();
     const image = await cloudinary.uploader.upload(req.file.path);
     const userId = req.user.userId;
     const {name, age, bio, availableTime} = req.body;
